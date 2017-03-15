@@ -1,0 +1,118 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# LRO.utilities
+
+R package: Utility functions and addins for RStudio.
+
+Helper tools I use in many projects but which don't deserve individual packages (yet at least).  
+
+By Ludvig R. Olsen,  
+Cognitive Science, Aarhus University.  
+Started in Feb. 2017  
+
+Contact at:  
+r-pkgs@ludvigolsen.dk  
+
+
+Main functions:   
+
+* polynomializer
+* %ni%
+* insertPipe (Addin)
+* rename_col
+
+## Installation  
+Development version:  
+
+> install.packages("devtools")
+>
+> devtools::install_github("LudvigOlsen/LRO.utilities")  
+
+## Use 
+
+### Addins
+
+* Install package.
+* Add key command by going to:   
+    - *Tools* > *Addins* > *Browse Addins* > *Keyboard Shortcuts*.  
+    - Find **Insert Image** and press its field under *Shortcut*. 
+    - Press desired key command.
+    - Press *Apply*.
+    - Press *Execute*.
+* Press chosen key command inside R Markdown document.  
+
+### Examples
+
+```{r message=FALSE, warning=FALSE}
+# Attach packages
+library(LRO.utilities)
+library(dplyr) # %>% 
+library(knitr) # kable()
+```
+
+
+#### polynomializer
+
+Exponentiate vectors to make polynomials of degree 2 to degree.
+
+E.g. create columns v^2, v^3, v^4...
+
+```{r}
+# On vector
+
+vect <- c(1,3,5,7,8)
+
+polynomializer(vect, degree = 3) %>% 
+  kable()
+
+# On vectors in dataframe
+
+data <- data.frame(vect = c(1,3,5,7,8),
+                   bect = vect*3,
+                   dect = vect*5)
+
+polynomializer(data, 
+               cols = c('bect','dect'), 
+               degree = 3) %>% 
+  kable()
+```
+
+
+#### %ni%
+
+"Not in"
+
+```{r}
+
+c(1,3,5) %ni% c(2,3,6)
+
+```
+
+#### rename_col
+
+Rename single column in dataframe. This is a bit like plyr::rename just only for 1 column at a time.
+
+```{r}
+data <- data.frame(vect = c(1,3,5,7,8),
+                   bect = vect*3,
+                   dect = vect*5)
+
+rename_col(data, 
+           old_name = 'bect', 
+           new_name = 'sect') %>% 
+  kable()
+
+```
+
