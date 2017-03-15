@@ -38,7 +38,7 @@ Use
 -   Install package.
 -   Add key command by going to:
     -   *Tools* &gt; *Addins* &gt; *Browse Addins* &gt; *Keyboard Shortcuts*.
-    -   Find **Insert Image** and press its field under *Shortcut*.
+    -   Find **Insert %&gt;%** and press its field under *Shortcut*.
     -   Press desired key command.
     -   Press *Apply*.
     -   Press *Execute*.
