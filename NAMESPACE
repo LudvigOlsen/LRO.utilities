@@ -3,4 +3,5 @@
 export("%ni%")
 export(insertPipe)
 export(polynomializer)
+export(rename_col)
 importFrom(dplyr,'%>%')
