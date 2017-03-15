@@ -1,0 +1,4 @@
+Name: Insert %>%
+Description: Inserts %>%
+Binding: insertPipe
+Interactive: false
