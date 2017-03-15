@@ -3,19 +3,24 @@
 #   __________________ #< 23b44618389c33a21e97dd5516d4bdc6 ># __________________
 #   Polynomializer                                                          ####
 
-#' @title Make n-degree polynomials.
-#' @description Exponentiate vectors to make n-degree polynomials.
-#'  E.g. create columns v^2, v^3, v^4.
+#' @title Create exponentiated vectors.
+#' @description Exponentiate vectors to make polynomials of
+#'  degree 2 to \code{degree}.
+#'
+#'  E.g. create columns \code{v^2, v^3, v^4...}
 #' @author Ludvig Renbo Olsen, \email{r-pkgs@ludvigolsen.dk}
 #' @export
 #' @param data Dataframe or Vector.
 #' @param cols Names of columns to "polynomialize". (Character Vector)
+#'
 #'  Only specify if data is dataframe.
 #' @param degree Degree of the polynomial. Up to and including.
 #' @param suffix String to go after original name of column. Always followed by
 #'  the exponent used. (Character)
-#' @param up_to Create polynomials up to 'degree'. (Logical)
+#' @param up_to Create polynomials up to \code{degree}. (Logical)
+#' @return Dataframe with added exponentiated columns.
 #' @export
+#' @importFrom dplyr '%>%'
 polynomializer <- function(data, cols=NULL, degree = 3,
                            suffix='_', up_to = TRUE){
 
@@ -109,10 +114,35 @@ polynomializer <- function(data, cols=NULL, degree = 3,
 
   })
 
-##  .................. #< 56b422700dad2874cc752ba784aeef39 ># ..................
-##  Merge and return dataframes                                             ####
+##  .................. #< 7cc004e6e0fcb6ecb9b70f7615dd5db8 ># ..................
+##  Merge and sort                                                          ####
 
-  return(merge(data, data_polynomialized))
+  # Get column names for data
+  data_col_names <- colnames(data)
+
+  # Create temporary sorting index as merge sometimes
+  # change the order of rows
+  data[['polyn_temp_index']] <- c(1:nrow(data))
+
+  # Merge data
+  merged_data <- merge(data, data_polynomialized)
+
+  # Get column names of merged data
+  merged_col_names <- colnames(merged_data)
+
+  # Find the created columns
+  not_poly_names <- merged_col_names[merged_col_names %ni% data_col_names]
+
+  # Set a list of column names in the wanted order
+  column_order <- c(data_col_names, not_poly_names)
+
+  # Sort data and return
+  merged_data %>%
+    dplyr::arrange(polyn_temp_index) %>%
+    dplyr::select_(.dots = column_order) %>%
+    dplyr::select(-c(polyn_temp_index)) %>%
+    return()
+
 
 }
 

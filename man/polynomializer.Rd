@@ -2,7 +2,7 @@
 % Please edit documentation in R/polynomializer.R
 \name{polynomializer}
 \alias{polynomializer}
-\title{Make n-degree polynomials.}
+\title{Create exponentiated vectors.}
 \usage{
 polynomializer(data, cols = NULL, degree = 3, suffix = "_",
   up_to = TRUE)
@@ -11,18 +11,24 @@ polynomializer(data, cols = NULL, degree = 3, suffix = "_",
 \item{data}{Dataframe or Vector.}
 
 \item{cols}{Names of columns to "polynomialize". (Character Vector)
-Only specify if data is dataframe.}
+
+ Only specify if data is dataframe.}
 
 \item{degree}{Degree of the polynomial. Up to and including.}
 
 \item{suffix}{String to go after original name of column. Always followed by
 the exponent used. (Character)}
 
-\item{up_to}{Create polynomials up to 'degree'. (Logical)}
+\item{up_to}{Create polynomials up to \code{degree}. (Logical)}
+}
+\value{
+Dataframe with added exponentiated columns.
 }
 \description{
-Exponentiate vectors to make n-degree polynomials.
- E.g. create columns v^2, v^3, v^4.
+Exponentiate vectors to make polynomials of
+ degree 2 to \code{degree}.
+
+ E.g. create columns \code{v^2, v^3, v^4...}
 }
 \author{
 Ludvig Renbo Olsen, \email{r-pkgs@ludvigolsen.dk}
