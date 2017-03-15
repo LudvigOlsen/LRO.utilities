@@ -5,7 +5,7 @@ LRO.utilities
 
 R package: Utility functions and addins for RStudio.
 
-Helper tools I use in many projects but which don't deserve individual packages (yet at least).
+Helper tools I use in many projects.
 
 By Ludvig R. Olsen,
 Cognitive Science, Aarhus University.
