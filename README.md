@@ -17,7 +17,7 @@ Contact at:
 Main functions:
 
 -   polynomializer
--   scaler
+-   scaler + scaler\_
 -   %ni%
 -   insertPipe (Addin)
 -   rename\_col
@@ -102,6 +102,8 @@ polynomializer(data,
 #### scaler
 
 Center and/or scale multiple columns of a dataframe. Can be used in %&gt;% pipelines.
+
+scaler\_ is a standard evaluation version.
 
 ``` r
 

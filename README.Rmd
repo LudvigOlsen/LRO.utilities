@@ -29,7 +29,7 @@ r-pkgs@ludvigolsen.dk
 Main functions:   
 
 * polynomializer
-* scaler
+* scaler + scaler_
 * %ni%
 * insertPipe (Addin)
 * rename_col
@@ -94,6 +94,8 @@ polynomializer(data,
 
 Center and/or scale multiple columns of a dataframe. Can be used in %>% pipelines.
 
+scaler_ is a standard evaluation version.
+
 ```{r}
 
 # Scale and center 'vect' and 'bect' 
@@ -111,7 +113,6 @@ data %>%
 data %>% 
   scaler(2:3, scale = F) %>% 
   kable()
-
 
 ```
 
