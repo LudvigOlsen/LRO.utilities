@@ -2,16 +2,26 @@
 % Please edit documentation in R/scaler.R
 \name{scaler}
 \alias{scaler}
+\alias{scaler_}
+\alias{scaler_}
 \title{Scale multiple columns at once}
 \usage{
 scaler(data, ..., center = TRUE, scale = TRUE)
+
+scaler_(data, cols = NULL, center = TRUE, scale = TRUE)
 }
 \arguments{
 \item{data}{Dataframe, tibble, etc.}
 
-\item{...}{Variables to include/exclude.
-You can use same specifications as in dplyr's \link[dplyr]{select}.
-If missing, defaults to all non-grouping variables.}
+\item{..., cols}{Variables to include/exclude.
+
+ ... :
+ You can use same specifications as in dplyr's \link[dplyr]{select}.
+
+ cols :
+ character vector
+
+ If missing, defaults to all non-grouping variables.}
 
 \item{center}{Logical.}
 
@@ -23,6 +33,8 @@ Tibble where selected columns have been scaled.
 \description{
 Center and/or scale multiple columns of a dataframe.
  Can be used in \link[magrittr]{\%>\%} pipelines.
+
+ scaler_ is the standard evalution version.
 }
 \details{
 Scales each column and converts to vector, thereby removing
@@ -52,4 +64,9 @@ scaler(df, c(a,b))
 
 # Scaling all but 'a'
 scaler(df, -a)
+
+# Standard evalutation version
+# scaler_()
+scaler_(df, cols = c('a','b'))
+
 }
