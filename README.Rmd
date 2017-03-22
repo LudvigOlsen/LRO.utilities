@@ -63,6 +63,7 @@ library(dplyr) # %>%
 library(knitr) # kable()
 ```
 
+---
 
 #### polynomializer
 
@@ -90,6 +91,8 @@ polynomializer(data,
   kable()
 ```
 
+---
+
 #### scaler
 
 Center and/or scale multiple columns of a dataframe. Can be used in %>% pipelines.
@@ -116,6 +119,7 @@ data %>%
 
 ```
 
+---
 
 #### %ni%
 
@@ -127,6 +131,7 @@ c(1,3,5) %ni% c(2,3,6)
 
 ```
 
+---
 
 #### rename_col
 
