@@ -24,6 +24,10 @@ Tibble where selected columns have been scaled.
 Center and/or scale multiple columns of a dataframe.
  Can be used in \link[magrittr]{\%>\%} pipelines.
 }
+\details{
+Scales each column and converts to vector, thereby removing
+ attributes.
+}
 \examples{
 # Attach package
 library(LRO.utilities)
@@ -41,4 +45,11 @@ scaler(df, b)
 # Scale but not center 'a'
 scaler(df, a, center = FALSE)
 
+# Scaling multiple columns
+scaler(df, a, b)
+scaler(df, 1:2)
+scaler(df, c(a,b))
+
+# Scaling all but 'a'
+scaler(df, -a)
 }

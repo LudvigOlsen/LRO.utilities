@@ -9,6 +9,8 @@
 #' @param center Logical.
 #' @param scale Logical.
 #' @return Tibble where selected columns have been scaled.
+#' @details Scales each column and converts to vector, thereby removing
+#'  attributes.
 #' @export
 #' @examples
 #' # Attach package
@@ -27,13 +29,30 @@
 #' # Scale but not center 'a'
 #' scaler(df, a, center = FALSE)
 #'
+#' # Scaling multiple columns
+#' scaler(df, a, b)
+#' scaler(df, 1:2)
+#' scaler(df, c(a,b))
+#'
+#' # Scaling all but 'a'
+#' scaler(df, -a)
 #' @importFrom dplyr '%>%'
 scaler <- function(data, ..., center = TRUE, scale = TRUE){
 
+  # Work with data
   data %>%
+
+    # Convert to tibble
     tibble::as_tibble() %>%
-    dplyr::mutate_each(dplyr::funs(scale(., center = center,
-                                         scale = scale)), ...) %>%
+
+    # Scale each column specified in ...
+    # All columns by default
+    dplyr::mutate_each(
+      dplyr::funs(scale(., center = center,
+                        scale = scale)), ...) %>%
+
+    # Convert each column to vector
+    # as scale() adds attributes
     dplyr::mutate_each(dplyr::funs(as.vector), ...)
 
 }
