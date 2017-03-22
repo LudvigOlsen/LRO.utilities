@@ -17,6 +17,7 @@ Contact at:
 Main functions:
 
 -   polynomializer
+-   scaler
 -   %ni%
 -   insertPipe (Addin)
 -   rename\_col
@@ -80,7 +81,7 @@ polynomializer(vect, degree = 3) %>%
 
 # On vectors in dataframe
 
-data <- data.frame(vect = c(1,3,5,7,8),
+data <- data.frame(vect = vect,
                    bect = vect*3,
                    dect = vect*5)
 
@@ -97,6 +98,59 @@ polynomializer(data,
 |     5|    15|    25|      225|     3375|      625|    15625|
 |     7|    21|    35|      441|     9261|     1225|    42875|
 |     8|    24|    40|      576|    13824|     1600|    64000|
+
+#### scaler
+
+Center and/or scale multiple columns of a dataframe. Can be used in %&gt;% pipelines.
+
+``` r
+
+# Scale and center 'vect' and 'bect' 
+# in dataframe from previous example
+scaler(data, vect, bect) %>% 
+  kable()
+```
+
+|        vect|        bect|  dect|
+|-----------:|-----------:|-----:|
+|  -1.3270176|  -1.3270176|     5|
+|  -0.6285873|  -0.6285873|    15|
+|   0.0698430|   0.0698430|    25|
+|   0.7682733|   0.7682733|    35|
+|   1.1174885|   1.1174885|    40|
+
+``` r
+
+# Only scaling 'vect'  - working in pipeline
+data %>% 
+  scaler(vect, center = F) %>% 
+  kable()
+```
+
+|       vect|  bect|  dect|
+|----------:|-----:|-----:|
+|  0.1643990|     3|     5|
+|  0.4931970|     9|    15|
+|  0.8219949|    15|    25|
+|  1.1507929|    21|    35|
+|  1.3151919|    24|    40|
+
+``` r
+
+# Only center 'bect' and 'dect' 
+# selecting with column index range
+data %>% 
+  scaler(2:3, scale = F) %>% 
+  kable()
+```
+
+|  vect|   bect|  dect|
+|-----:|------:|-----:|
+|     1|  -11.4|   -19|
+|     3|   -5.4|    -9|
+|     5|    0.6|     1|
+|     7|    6.6|    11|
+|     8|    9.6|    16|
 
 #### %ni%
 

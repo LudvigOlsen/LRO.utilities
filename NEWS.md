@@ -4,5 +4,6 @@
 * Added %ni%
 * Added polynomializer
 * Added rename_col
+* Added scaler
 
 
