@@ -31,8 +31,8 @@ Main functions:
 * polynomializer
 * %ni%
 * insertPipe (Addin)
-* rename_col
 * scaler, scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
+* rename_col
 
 ## Installation  
 Development version:  
@@ -93,6 +93,18 @@ polynomializer(data,
 
 ---
 
+#### %ni%
+
+"Not in"
+
+```{r}
+
+c(1,3,5) %ni% c(2,3,6)
+
+```
+
+---
+
 #### scaler
 
 Center and/or scale multiple columns of a dataframe.
@@ -146,18 +158,6 @@ scaled_df %>% kable()
 scaled_df %>% 
   scaler_invert(fit_object = fitted_scaler) %>% 
   kable()
-
-```
-
----
-
-#### %ni%
-
-"Not in"
-
-```{r}
-
-c(1,3,5) %ni% c(2,3,6)
 
 ```
 
