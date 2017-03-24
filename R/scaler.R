@@ -1,9 +1,22 @@
 
+#   ____________________________________________________________________________
+#   scaler                                                                  ####
+
 #' @title Scale multiple columns at once
 #' @description Center and/or scale multiple columns of a dataframe.
-#'  Can be used in \link[magrittr]{\%>\%} pipelines.
 #'
-#'  scaler_ is the standard evalution version.
+#'  \strong{scaler} is designed to work with \link[magrittr]{\%>\%} pipelines.
+#'
+#'  \strong{scaler_fit} returns fit_object with information used to
+#'  transform data.
+#'
+#'  \strong{scaler_transform} scales data based on the information
+#'  in the fit_object.
+#'
+#'  \strong{scaler_invert} inverts scaling based on the information
+#'  in the fit_object.
+#'
+#'  \strong{scaler_} and \strong{scaler_fit_} are standard evalution versions.
 #' @param data Dataframe, tibble, etc.
 #' @param ...,cols Variables to include/exclude.
 #'
@@ -14,8 +27,9 @@
 #'  character vector
 #'
 #'  If missing, defaults to all non-grouping variables.
-#' @param center Logical.
-#' @param scale Logical.
+#' @param center Logical or logical vector with element for each included column.
+#' @param scale Logical or logical vector with element for each included column.
+#' @param fit_object Object from scaler_fit used to transform data
 #' @return Tibble where selected columns have been scaled.
 #' @details Scales each column and converts to vector, thereby removing
 #'  attributes.
@@ -46,49 +60,237 @@
 #' # Scaling all but 'a'
 #' scaler(df, -a)
 #'
-#' # Standard evalutation version
-#' # scaler_()
-#' scaler_(df, cols = c('a','b'))
+#' ## Fit / Transform / Invert
+#'
+#' # Fit scaler
+#' fitted_scaler <- scaler_fit(df, 1:2)
+#'
+#' # Transform data
+#' scaled_df <- scaler_transform(df, fitted_scaler)
+#'
+#' # Invert scaling
+#' scaler_invert(scaled_df, fitted_scaler)
+#'
+#' ## Setting scale and center for each column
+#'
+#' scaler(df, center = c(TRUE, FALSE),
+#'        scale = c(FALSE, TRUE))
+#'
+#' ## Standard evalutation versions
+#'
+#' scaler_(df, cols = c('b'))
+#' scaler_fit_(df, cols = c('a'))
 #'
 #' @importFrom dplyr '%>%'
 scaler <- function(data, ..., center = TRUE, scale = TRUE){
 
-  # Work with data
-  data %>%
+  # Get columns from dots
+  cols <- get_dots_cols(data, ...)
 
-    # Convert to tibble
-    tibble::as_tibble() %>%
-
-    # Scale each column specified in ...
-    # All columns by default
-    dplyr::mutate_each(
-      dplyr::funs(scale(., center = center,
-                        scale = scale)), ...) %>%
-
-    # Convert each column to vector
-    # as scale() adds attributes
-    dplyr::mutate_each(dplyr::funs(as.vector), ...)
+  scaler_(data = data,
+                 cols = cols,
+                 center = center,
+                 scale = scale)
 
 }
+
+
+#   ____________________________________________________________________________
+#   scaler_                                                                 ####
 
 #' @rdname scaler
 #' @export
 scaler_ <- function(data, cols=NULL, center = TRUE, scale = TRUE){
 
-  # Work with data
-  data %>%
+  # Fit scaler
+  fitted <- scaler_fit_(data = data,
+                       cols = cols,
+                       center = center,
+                       scale = scale)
 
-    # Convert to tibble
+  # Scale data with fit_object
+  scaled <- scaler_transform(data = data,
+                             fit_object = fitted)
+
+  return(scaled)
+
+}
+
+
+#   ____________________________________________________________________________
+#   scaler_fit                                                              ####
+
+## Create fitted scaler object that holds the
+## attributes mean, sd, center, scale
+## Create transform function for transforming
+## new data by the same attributes
+
+#' @rdname scaler
+#' @export
+scaler_fit <- function(data, ..., center = TRUE, scale = TRUE){
+
+  # Get columns from dots
+  cols <- get_dots_cols(data, ...)
+
+  scaler_fit_(data = data,
+          cols = cols,
+          center = center,
+          scale = scale)
+
+}
+
+
+#' @rdname scaler
+#' @export
+scaler_fit_ <- function(data, cols = NULL, center = TRUE, scale = TRUE){
+
+  if (is.null(cols)){
+
+    cols <- colnames(data)
+
+  }
+
+  # Center and Scale should either be a scalar or a vector the length
+  # of cols
+  stopifnot(length(center) == 1 | length(center) == length(cols),
+            length(scale) == 1 | length(center) == length(scale))
+
+  summaries <- plyr::ldply(cols, function(col){
+
+    data.frame(column = col, mean = mean(data[[col]]), sd = sd(data[[col]]))
+
+  }) %>%
+
+    dplyr::mutate(center = center,
+           scale = scale) %>%
+
+    tibble::as_tibble()
+
+  return(summaries)
+
+
+}
+
+
+#   ____________________________________________________________________________
+#   scaler_transform                                                        ####
+
+#' @rdname scaler
+#' @export
+scaler_transform <- function(data, fit_object){
+
+  transform.scaler(data, fit_object, FUN = scale_single)
+
+}
+
+#   ____________________________________________________________________________
+#   scaler_invert                                                           ####
+
+#' @rdname scaler
+#' @export
+scaler_invert <- function(data, fit_object){
+
+  transform.scaler(data, fit_object, FUN = invert_scale_single)
+
+}
+
+
+#   ____________________________________________________________________________
+#   helpers                                                                 ####
+
+
+scale_single <- function(col, mean, sd, center, scale){
+
+  # Perform centering if specified
+  if(isTRUE(center)){
+
+    col <- col - mean
+
+  }
+
+  # Perform scaling if specified
+  if(isTRUE(scale)){
+
+    col <- col / sd
+
+  }
+
+  # Return column
+  return(col)
+
+}
+
+
+invert_scale_single <- function(col, mean, sd, center, scale){
+
+  # Invert scaling if specified
+  if(isTRUE(scale)){
+
+    col <- col * sd
+
+  }
+
+  # Invert centering if specified
+  if(isTRUE(center)){
+
+    col <- col + mean
+
+  }
+
+
+
+  # Return column
+  return(col)
+
+}
+
+
+get_dots_cols <- function(data, ...){
+
+  #
+  # Get column names from dots
+  # If cols is missing, get all
+  # column names in data
+  #
+
+  if (missing(...)){
+
+    cols <- colnames(data)
+
+  } else {
+
+    cols <- data %>%
+      dplyr::select(...)
+
+    cols <- colnames(cols)
+
+  }
+
+  return(cols)
+
+}
+
+
+transform.scaler <- function(data, fit_object, FUN){
+
+  #
+  # Transforms data using FUN
+  #
+
+  transformed <- plyr::llply(colnames(data), function(col){
+
+    FUN(data[[col]],
+        fit_object[['mean']][fit_object[['column']] == col],
+        fit_object[['sd']][fit_object[['column']] == col],
+        fit_object[['center']][fit_object[['column']] == col],
+        fit_object[['scale']][fit_object[['column']] == col])
+
+  }) %>% as.data.frame()
+
+  colnames(transformed) <- colnames(data)
+
+  transformed %>%
     tibble::as_tibble() %>%
-
-    # Scale each column specified in ...
-    # All columns by default
-    dplyr::mutate_each_(
-      dplyr::funs(scale(., center = center,
-                        scale = scale)), vars = cols) %>%
-
-    # Convert each column to vector
-    # as scale() adds attributes
-    dplyr::mutate_each_(dplyr::funs(as.vector), vars = cols)
+    return()
 
 }
