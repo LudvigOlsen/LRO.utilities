@@ -17,10 +17,10 @@ Contact at:
 Main functions:
 
 -   polynomializer
--   scaler + scaler\_
 -   %ni%
 -   insertPipe (Addin)
 -   rename\_col
+-   scaler, scaler\_, scaler\_fit, scaler\_fit\_, scaler\_transform, scaler\_invert
 
 Installation
 ------------
@@ -105,9 +105,17 @@ polynomializer(data,
 
 #### scaler
 
-Center and/or scale multiple columns of a dataframe. Can be used in %&gt;% pipelines.
+Center and/or scale multiple columns of a dataframe.
 
-scaler\_ is a standard evaluation version.
+**scaler** is designed to work with %&gt;% pipelines.
+
+**scaler\_fit** returns fit\_object with information used to transform data.
+
+**scaler\_transform** scales data based on the information in the fit\_object.
+
+**scaler\_invert** inverts scaling based on the information in the fit\_object.
+
+**scaler\_** and **scaler\_fit\_** are standard evalution versions.
 
 ``` r
 
@@ -135,11 +143,11 @@ data %>%
 
 |       vect|  bect|  dect|
 |----------:|-----:|-----:|
-|  0.1643990|     3|     5|
-|  0.4931970|     9|    15|
-|  0.8219949|    15|    25|
-|  1.1507929|    21|    35|
-|  1.3151919|    24|    40|
+|  0.3492151|     3|     5|
+|  1.0476454|     9|    15|
+|  1.7460757|    15|    25|
+|  2.4445060|    21|    35|
+|  2.7937212|    24|    40|
 
 ``` r
 
@@ -157,6 +165,55 @@ data %>%
 |     5|    0.6|     1|
 |     7|    6.6|    11|
 |     8|    9.6|    16|
+
+##### Fit / Transform / Invert
+
+``` r
+# Fit scaler
+fitted_scaler <- data %>% 
+  scaler_fit()
+
+fitted_scaler %>% kable()
+```
+
+| column |  mean|         sd| center | scale |
+|:-------|-----:|----------:|:-------|:------|
+| vect   |   4.8|   2.863564| TRUE   | TRUE  |
+| bect   |  14.4|   8.590693| TRUE   | TRUE  |
+| dect   |  24.0|  14.317821| TRUE   | TRUE  |
+
+``` r
+
+# Transform data
+scaled_df <- data %>% 
+  scaler_transform(fit_object = fitted_scaler)
+
+scaled_df %>% kable()
+```
+
+|        vect|        bect|        dect|
+|-----------:|-----------:|-----------:|
+|  -1.3270176|  -1.3270176|  -1.3270176|
+|  -0.6285873|  -0.6285873|  -0.6285873|
+|   0.0698430|   0.0698430|   0.0698430|
+|   0.7682733|   0.7682733|   0.7682733|
+|   1.1174885|   1.1174885|   1.1174885|
+
+``` r
+
+# Invert scaling
+scaled_df %>% 
+  scaler_invert(fit_object = fitted_scaler) %>% 
+  kable()
+```
+
+|  vect|  bect|  dect|
+|-----:|-----:|-----:|
+|     1|     3|     5|
+|     3|     9|    15|
+|     5|    15|    25|
+|     7|    21|    35|
+|     8|    24|    40|
 
 ------------------------------------------------------------------------
 

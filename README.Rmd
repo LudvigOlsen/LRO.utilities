@@ -29,10 +29,10 @@ r-pkgs@ludvigolsen.dk
 Main functions:   
 
 * polynomializer
-* scaler + scaler_
 * %ni%
 * insertPipe (Addin)
 * rename_col
+* scaler, scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
 
 ## Installation  
 Development version:  
@@ -95,9 +95,17 @@ polynomializer(data,
 
 #### scaler
 
-Center and/or scale multiple columns of a dataframe. Can be used in %>% pipelines.
+Center and/or scale multiple columns of a dataframe.
 
-scaler_ is a standard evaluation version.
+**scaler** is designed to work with %>% pipelines.
+
+**scaler_fit** returns fit_object with information used to transform data.
+
+**scaler_transform** scales data based on the information in the fit_object.
+
+**scaler_invert** inverts scaling based on the information in the fit_object.
+
+**scaler_** and **scaler_fit_** are standard evalution versions.  
 
 ```{r}
 
@@ -115,6 +123,28 @@ data %>%
 # selecting with column index range
 data %>% 
   scaler(2:3, scale = F) %>% 
+  kable()
+
+```
+
+##### Fit / Transform / Invert
+
+```{r}
+# Fit scaler
+fitted_scaler <- data %>% 
+  scaler_fit()
+
+fitted_scaler %>% kable()
+
+# Transform data
+scaled_df <- data %>% 
+  scaler_transform(fit_object = fitted_scaler)
+
+scaled_df %>% kable()
+
+# Invert scaling
+scaled_df %>% 
+  scaler_invert(fit_object = fitted_scaler) %>% 
   kable()
 
 ```
