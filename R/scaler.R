@@ -17,7 +17,7 @@
 #'  in the fit_object.
 #'
 #'  \strong{scaler_} and \strong{scaler_fit_} are standard evalution versions.
-#' @param data Dataframe, tibble, etc.
+#' @param data Dataframe, tbl, vector
 #' @param ...,cols Variables to include/exclude.
 #'
 #'  ... :
@@ -31,9 +31,8 @@
 #' @param scale Logical or logical vector with element for each included column.
 #' @param fit_object Object from scaler_fit used to transform data
 #' @return Tibble where selected columns have been scaled.
-#' @details Scales each column and converts to vector, thereby removing
-#'  attributes.
-#' @aliases scaler_
+#' @details Scales each specified column and converts to tibble.
+#' @aliases scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
 #' @export
 #' @examples
 #' # Attach package
@@ -84,13 +83,28 @@
 #' @importFrom dplyr '%>%'
 scaler <- function(data, ..., center = TRUE, scale = TRUE){
 
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
+
   # Get columns from dots
   cols <- get_dots_cols(data, ...)
 
   scaler_(data = data,
                  cols = cols,
                  center = center,
-                 scale = scale)
+                 scale = scale
+                 )
 
 }
 
@@ -102,11 +116,26 @@ scaler <- function(data, ..., center = TRUE, scale = TRUE){
 #' @export
 scaler_ <- function(data, cols=NULL, center = TRUE, scale = TRUE){
 
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
+
   # Fit scaler
   fitted <- scaler_fit_(data = data,
                        cols = cols,
                        center = center,
                        scale = scale)
+
 
   # Scale data with fit_object
   scaled <- scaler_transform(data = data,
@@ -129,6 +158,20 @@ scaler_ <- function(data, cols=NULL, center = TRUE, scale = TRUE){
 #' @export
 scaler_fit <- function(data, ..., center = TRUE, scale = TRUE){
 
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
+
   # Get columns from dots
   cols <- get_dots_cols(data, ...)
 
@@ -143,6 +186,20 @@ scaler_fit <- function(data, ..., center = TRUE, scale = TRUE){
 #' @rdname scaler
 #' @export
 scaler_fit_ <- function(data, cols = NULL, center = TRUE, scale = TRUE){
+
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
 
   if (is.null(cols)){
 
@@ -179,6 +236,20 @@ scaler_fit_ <- function(data, cols = NULL, center = TRUE, scale = TRUE){
 #' @export
 scaler_transform <- function(data, fit_object){
 
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
+
   transform.scaler(data, fit_object, FUN = scale_single)
 
 }
@@ -189,6 +260,20 @@ scaler_transform <- function(data, fit_object){
 #' @rdname scaler
 #' @export
 scaler_invert <- function(data, fit_object){
+
+  # If data is a vector
+  # Convert to tibble
+  # with name of passed object
+  # or "x" is object has no name
+  if (is.vector(data)){
+
+    # Get name of passed object
+    # If it is c(...) it will be set to "x"
+    # in the convert_and_... function
+    vector_name <- deparse(substitute(data))
+
+    data <- convert_and_name_vector(data, vector_name)
+  }
 
   transform.scaler(data, fit_object, FUN = invert_scale_single)
 
@@ -292,5 +377,30 @@ transform.scaler <- function(data, fit_object, FUN){
   transformed %>%
     tibble::as_tibble() %>%
     return()
+
+}
+
+
+convert_and_name_vector <- function(data, vector_name){
+
+  # First check if object had no name
+  # This will mean that vector name is c(...)
+  # So we check using regex
+  if (grepl("c(", vector_name, fixed = T)){
+
+    vector_name <- NULL
+
+  }
+
+  # Convert data to tibble with colname "x"
+  data <- tibble::tibble(x = data)
+
+  # If original vector had a name
+  # Set colname to that
+  if (!is.null(vector_name)){
+    colnames(data) <- vector_name
+  }
+
+  return(data)
 
 }
