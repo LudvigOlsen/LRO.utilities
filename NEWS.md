@@ -4,6 +4,7 @@
 * Added %ni%
 * Added polynomializer
 * Added rename_col
-* Added scaler
+* Added scaler, scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
+* Added binarizer and binarizer_
 
 
