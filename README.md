@@ -20,6 +20,7 @@ Main functions:
 -   %ni%
 -   insertPipe (Addin)
 -   scaler, scaler\_, scaler\_fit, scaler\_fit\_, scaler\_transform, scaler\_invert
+-   binarizer, binarizer\_
 -   rename\_col
 
 Installation
@@ -229,15 +230,35 @@ scaled_df %>%
 
 ------------------------------------------------------------------------
 
+#### binarizer
+
+Binarize multiple columns of a dataframe based on a given threshold.
+
+**binarizer** is designed to work with %&gt;% pipelines.
+
+**binarizer\_** is a standard evalution version.
+
+``` r
+
+scaled_df %>% 
+  binarizer(thresh = 0)
+#> # A tibble: 5 × 3
+#>    vect  bect  dect
+#>   <dbl> <dbl> <dbl>
+#> 1     0     0     0
+#> 2     0     0     0
+#> 3     1     1     1
+#> 4     1     1     1
+#> 5     1     1     1
+```
+
+------------------------------------------------------------------------
+
 #### rename\_col
 
 Rename single column in dataframe. This is a bit like plyr::rename just only for 1 column at a time.
 
 ``` r
-data <- data.frame(vect = c(1,3,5,7,8),
-                   bect = vect*3,
-                   dect = vect*5)
-
 rename_col(data, 
            old_name = 'bect', 
            new_name = 'sect') %>% 
