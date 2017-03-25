@@ -45,6 +45,10 @@ test_that("scaler() works correctly", {
                 b = c(-1,0,1)))
 
 
+  # On vector
+  expect_equal(scaler(c(-1,2,5)), tibble(x = c(-1,0,1)))
+  expect_equal(scaler_(c(-1,2,5)), tibble(x = c(-1,0,1)))
+
 })
 
 
@@ -84,6 +88,22 @@ test_that("scaler_ fit/transform/invert works correctly", {
                tibble(a = c(1,3,5),
                       b = c(2,3,4)))
 
+  # On a vector
+  expect_equal(scaler_fit(c(-1,2,5)),
+               tibble(column = factor(c("x")),
+                       mean = c(2),
+                       sd = c(3),
+                       center = c(TRUE),
+                       scale = c(TRUE)))
+
+  expect_equal(scaler_transform(c(-1,2,5),
+                                scaler_fit(c(-1,2,5))),
+               tibble(x = c(-1,0,1)))
+
+  scaled_vec <- scaler(c(-1,2,5))
+
+  expect_equal(scaler_invert(scaled_vec, scaler_fit(c(-1,2,5))),
+               tibble(x = c(-1,2,5)))
 
 })
 

@@ -2,7 +2,11 @@
 % Please edit documentation in R/scaler.R
 \name{scaler}
 \alias{scaler}
-\alias{scaler_}
+\alias{scaler_,}
+\alias{scaler_fit,}
+\alias{scaler_fit_,}
+\alias{scaler_transform,}
+\alias{scaler_invert}
 \alias{scaler_}
 \alias{scaler_fit}
 \alias{scaler_fit_}
@@ -61,8 +65,7 @@ Center and/or scale multiple columns of a dataframe.
  \strong{scaler_} and \strong{scaler_fit_} are standard evalution versions.
 }
 \details{
-Scales each column and converts to vector, thereby removing
- attributes.
+Scales each specified column and converts to tibble.
 }
 \examples{
 # Attach package
