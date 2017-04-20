@@ -13,7 +13,10 @@ Imports:
     rstudioapi (>= 0.5),
     dplyr,
     plyr,
-    tibble
+    tibble,
+    polspline, 
+    tidyr, 
+    ggplot2
 RoxygenNote: 6.0.1
 Suggests: testthat,
     knitr,
