@@ -2,8 +2,8 @@
 
 savageDickey <- function(post, prior, Q, xlab="parameter values", printplot=TRUE){
   
-  results <- data.frame("dposterior" = samples$BUGSoutput$sims.list[post], 
-                        "dprior" = samples$BUGSoutput$sims.list[prior] )
+  results <- data.frame("dposterior" = post, 
+                        "dprior" = prior )
   plot <- results %>% 
     gather("postprior", "gathered") %>%
     ggplot() +
