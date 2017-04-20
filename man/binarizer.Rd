@@ -11,7 +11,7 @@ binarizer(data, ..., thresh = 0)
 binarizer_(data, cols = NULL, thresh = 0)
 }
 \arguments{
-\item{data}{Dataframe, tibble, etc.}
+\item{data}{Dataframe, tbl, vector}
 
 \item{..., cols}{Variables to include/exclude.
 

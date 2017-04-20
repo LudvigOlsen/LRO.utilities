@@ -27,7 +27,7 @@ scaler_transform(data, fit_object)
 scaler_invert(data, fit_object)
 }
 \arguments{
-\item{data}{Dataframe, tibble, etc.}
+\item{data}{Dataframe, tbl, vector}
 
 \item{..., cols}{Variables to include/exclude.
 
