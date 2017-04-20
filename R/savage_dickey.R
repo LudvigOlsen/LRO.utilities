@@ -11,6 +11,7 @@
 #'  dlogspline(Q,logspline(post))
 #' @param post Samples from posterior distribution (Numeric)
 #' @param prior Samples from prior distribution (Numeric)
+#' @param Q Point on x-axis for calculating Bayes factor.
 #' @param xlab Label for x-axis
 #' @param ylab Label for y-axis
 #' @param print_plot (Logical)

@@ -12,6 +12,8 @@ savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
 
 \item{prior}{Samples from prior distribution (Numeric)}
 
+\item{Q}{Point on x-axis for calculating Bayes factor.}
+
 \item{xlab}{Label for x-axis}
 
 \item{ylab}{Label for y-axis}
