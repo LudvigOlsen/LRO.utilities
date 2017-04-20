@@ -22,6 +22,7 @@ Main functions:
 -   scaler, scaler\_, scaler\_fit, scaler\_fit\_, scaler\_transform, scaler\_invert
 -   binarizer, binarizer\_
 -   rename\_col
+-   savage\_dickey
 
 Installation
 ------------

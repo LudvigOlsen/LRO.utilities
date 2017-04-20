@@ -34,6 +34,7 @@ Main functions:
 * scaler, scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
 * binarizer, binarizer_
 * rename_col
+* savage_dickey
 
 ## Installation  
 Development version:  
