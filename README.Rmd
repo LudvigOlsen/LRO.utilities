@@ -63,6 +63,7 @@ Development version:
 library(LRO.utilities)
 library(dplyr) # %>% 
 library(knitr) # kable()
+library(ggplot2)
 ```
 
 ---
@@ -207,9 +208,10 @@ posterior <- rnorm(1000, mean=2, sd=2)
 
 s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 
-str(s_d, max.level = 1)
-
-s_d
+s_d$BF10
+s_d$BF01
+s_d$post_prior_plot +
+  theme_bw()
 
 ```
 
