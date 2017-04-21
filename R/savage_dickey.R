@@ -2,7 +2,7 @@
 #   __________________ #< 89d7a9f84fe8faae45b2ec8cd64cbcb0 ># __________________
 #   Savage Dickey Bayes Factor                                              ####
 
-#' @title Calculate Bayes Factor
+#' @title Calculate Bayes Factor using Savage-Dickey density ratio.
 #' @description Creates plot of prior and posterior distributions and calculates the
 #'  Bayes factor at the point of interest (Q).
 #' @details Bayes factors are calculated using the \link[polspline]{polspline} package.
@@ -80,7 +80,8 @@ savage_dickey <- function(post, prior, Q,
       tidyr::gather("postprior", "gathered") %>%
       ggplot2::ggplot() +
       ggplot2::geom_density(ggplot2::aes(gathered, fill = postprior), alpha = .5) +
-      ggplot2::labs(x=xlab, y=ylab)
+      ggplot2::labs(x=xlab, y=ylab) +
+      ggplot2::geom_vline(xintercept=Q, color='steelblue2')
 
     if(isTRUE(print_plot)){
       print(plot_)
