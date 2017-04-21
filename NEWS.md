@@ -6,5 +6,6 @@
 * Added rename_col
 * Added scaler, scaler_, scaler_fit, scaler_fit_, scaler_transform, scaler_invert
 * Added binarizer and binarizer_
+* Added savage_dickey
 
 
