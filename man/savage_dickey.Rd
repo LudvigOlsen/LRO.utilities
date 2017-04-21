@@ -5,7 +5,7 @@
 \title{Calculate Bayes Factor}
 \usage{
 savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
-  print_plot = FALSE, return_plot = TRUE)
+  plot = TRUE, print_plot = FALSE)
 }
 \arguments{
 \item{post}{Samples from posterior distribution (Numeric)}
@@ -18,9 +18,9 @@ savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
 
 \item{ylab}{Label for y-axis}
 
-\item{print_plot}{(Logical)}
+\item{plot}{Create density plot (Logical)}
 
-\item{return_plot}{(Logical)}
+\item{print_plot}{(Logical)}
 }
 \value{
 List with ggplot2 object (optional), BF10 and BF01
