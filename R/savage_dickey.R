@@ -1,4 +1,7 @@
 
+#   __________________ #< 89d7a9f84fe8faae45b2ec8cd64cbcb0 ># __________________
+#   Savage Dickey Bayes Factor                                              ####
+
 #' @title Calculate Bayes Factor
 #' @description Creates plot of prior and posterior distributions and calculates the
 #'  Bayes factor at the point of interest (Q).
@@ -14,8 +17,8 @@
 #' @param Q Point on x-axis for calculating Bayes factor.
 #' @param xlab Label for x-axis
 #' @param ylab Label for y-axis
+#' @param plot Create density plot (Logical)
 #' @param print_plot (Logical)
-#' @param return_plot (Logical)
 #' @return List with ggplot2 object (optional), BF10 and BF01
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
@@ -25,18 +28,28 @@
 savage_dickey <- function(post, prior, Q,
                           xlab = 'Parameter values',
                           ylab = 'Density',
-                          print_plot = FALSE,
-                          return_plot = TRUE){
+                          plot = TRUE,
+                          print_plot = FALSE){
 
-  # Gather posterior and prior
-  results <- data.frame("posterior" = post,
-                        "prior" = prior )
 
-  plot <- results %>%
-    tidyr::gather("postprior", "gathered") %>%
-    ggplot2::ggplot() +
-    ggplot2::geom_density(ggplot2::aes(gathered, fill = postprior), alpha = .5) +
-    ggplot2::labs(x=xlab, y=ylab)
+##  .................. #< e3616350b525535a2bfdf402f2e6b31e ># ..................
+##  Check arguments                                                         ####
+
+
+  stopifnot(is.logical(plot),
+            is.logical(print_plot),
+            is.numeric(post) | is.integer(post),
+            is.numeric(prior) | is.integer(prior),
+            is.numeric(Q) | is.integer(Q))
+
+  if ( !isTRUE(plot) && isTRUE(print_plot)){
+    message("'print_plot' has no effect when 'plot' is FALSE")
+  }
+
+
+##  .................. #< fc3ac4bea4b5054bdda78ec4479a8730 ># ..................
+##  Bayes factor                                                            ####
+
 
   BF10 <-
     dlogspline(Q, logspline(post)) /
@@ -45,13 +58,33 @@ savage_dickey <- function(post, prior, Q,
     dlogspline(Q, logspline(prior)) /
     dlogspline(Q,logspline(post))
 
-  if(isTRUE(print_plot)){
-    print(plot)
-  }
 
-  if (isTRUE(return_plot)){
+##  .................. #< 597ccd506c1a6e9cb52cd7fca23de8d8 ># ..................
+##  Plot                                                                    ####
 
-    return(list("Postprior_plot"=plot, "BF10" = BF10, "BF01" = BF01))
+
+  if (isTRUE(plot)){
+
+    # Gather posterior and prior
+    results <- data.frame("posterior" = post,
+                          "prior" = prior )
+
+    plot_ <- results %>%
+      tidyr::gather("postprior", "gathered") %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_density(ggplot2::aes(gathered, fill = postprior), alpha = .5) +
+      ggplot2::labs(x=xlab, y=ylab)
+
+    if(isTRUE(print_plot)){
+      print(plot_)
+    }
+
+
+##  .................. #< 4310b4db83cb41a819f09cb31930189a ># ..................
+##  Return list                                                             ####
+
+    return(list("Postprior_plot"=plot_, "BF10" = BF10, "BF01" = BF01))
+
   } else {
 
     return(list("BF10" = BF10, "BF01" = BF01))
