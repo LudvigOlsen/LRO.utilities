@@ -286,9 +286,11 @@ posterior <- rnorm(1000, mean=2, sd=2)
 s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 
 s_d$BF10
-#> [1] 0.2768344
+#> [1] 0.2587848
+
 s_d$BF01
-#> [1] 3.612268
+#> [1] 3.864214
+
 s_d$post_prior_plot +
   theme_bw()
 ```
