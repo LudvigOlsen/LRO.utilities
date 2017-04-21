@@ -23,6 +23,13 @@
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
 #' @export
+#' @examples
+#' # Sampling from two different gaussian distributions
+#' prior <- rnorm(1000, mean=0, sd=1)
+#' posterior <- rnorm(1000, mean=2, sd=2)
+#'
+#' # Calculating BF and generating plot of the given distributions
+#' s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 #' @importFrom polspline dlogspline logspline
 #' @importFrom dplyr '%>%'
 savage_dickey <- function(post, prior, Q,
