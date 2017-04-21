@@ -277,7 +277,9 @@ rename_col(data,
 
 #### savage\_dickey
 
-Calculate Bayes factor from 2 distributions and (optionally) plot the the two distributions. Returns list with ggplot2 object, BF10, and BF01.
+Calculate Bayes factor from 2 distributions and plot the the two distributions.
+
+Returns list with ggplot2 object, BF10, and BF01.
 
 ``` r
 prior <- rnorm(1000, mean=0, sd=1)
@@ -286,10 +288,10 @@ posterior <- rnorm(1000, mean=2, sd=2)
 s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 
 s_d$BF10
-#> [1] 0.2587848
+#> [1] 0.3158816
 
 s_d$BF01
-#> [1] 3.864214
+#> [1] 3.165744
 
 s_d$post_prior_plot +
   theme_bw()
