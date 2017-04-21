@@ -83,7 +83,7 @@ savage_dickey <- function(post, prior, Q,
 ##  .................. #< 4310b4db83cb41a819f09cb31930189a ># ..................
 ##  Return list                                                             ####
 
-    return(list("Postprior_plot"=plot_, "BF10" = BF10, "BF01" = BF01))
+    return(list("post_prior_plot" = plot_, "BF10" = BF10, "BF01" = BF01))
 
   } else {
 
