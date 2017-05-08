@@ -50,5 +50,4 @@ s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 Benjamin Hugh Zachariae
 
 Ludvig Renbo Olsen
-######@export
 }

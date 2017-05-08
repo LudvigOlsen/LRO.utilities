@@ -22,7 +22,7 @@
 #' @return List with ggplot2 object (optional), BF10 and BF01
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
-#' ######@export
+#' @export
 #' @examples
 #' # Sampling from two different gaussian distributions
 #' prior <- rnorm(1000, mean=0, sd=1)
