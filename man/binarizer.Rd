@@ -49,7 +49,7 @@ df <- data.frame('a' = c(1,2,3,4,5,6,7),
                  'b' = c(2,3,4,5,6,7,8))
 
 # First center both columns
-centered_df <- scaler(df, scale = F)
+centered_df <- scaler(df, scale = FALSE)
 
 # Binarizing multiple columns
 binarizer(centered_df)
