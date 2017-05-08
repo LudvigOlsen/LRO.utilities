@@ -22,7 +22,6 @@ Main functions:
 -   scaler, scaler\_, scaler\_fit, scaler\_fit\_, scaler\_transform, scaler\_invert
 -   binarizer, binarizer\_
 -   rename\_col
--   savage\_dickey
 
 Installation
 ------------
@@ -275,26 +274,15 @@ rename_col(data,
 |     7|    21|    35|
 |     8|    24|    40|
 
-#### savage\_dickey
-
-Calculate Bayes factor from 2 distributions and plot the the two distributions.
-
-Returns list with ggplot2 object, BF10, and BF01.
-
-``` r
-prior <- rnorm(1000, mean=0, sd=1)
-posterior <- rnorm(1000, mean=2, sd=2)
-
-s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
-
-s_d$BF10
-#> [1] 0.3158816
-
-s_d$BF01
-#> [1] 3.165744
-
-s_d$post_prior_plot +
-  theme_bw()
-```
-
-![](README-unnamed-chunk-9-1.png)
+<!-- #### savage_dickey -->
+<!-- Calculate Bayes factor from 2 distributions and plot the the two distributions.   -->
+<!-- Returns list with ggplot2 object, BF10, and BF01.   -->
+<!-- ```{r} -->
+<!-- prior <- rnorm(1000, mean=0, sd=1) -->
+<!-- posterior <- rnorm(1000, mean=2, sd=2) -->
+<!-- s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE) -->
+<!-- s_d$BF10 -->
+<!-- s_d$BF01 -->
+<!-- s_d$post_prior_plot + -->
+<!--   theme_bw() -->
+<!-- ``` -->

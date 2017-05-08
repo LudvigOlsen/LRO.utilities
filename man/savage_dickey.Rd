@@ -2,7 +2,7 @@
 % Please edit documentation in R/savage_dickey.R
 \name{savage_dickey}
 \alias{savage_dickey}
-\title{Calculate Bayes Factor}
+\title{Calculate Bayes Factor using Savage-Dickey density ratio.}
 \usage{
 savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
   plot = TRUE, print_plot = FALSE)
@@ -30,7 +30,7 @@ Creates plot of prior and posterior distributions and calculates the
  Bayes factor at the point of interest (Q).
 }
 \details{
-Bayes factors are calculated using the \link[polspline]{polspline} package.
+Bayes factors are calculated using the polspline package.
 
  BF10 <- dlogspline(Q, logspline(post)) /
  dlogspline(Q,logspline(prior))
@@ -50,4 +50,5 @@ s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 Benjamin Hugh Zachariae
 
 Ludvig Renbo Olsen
+######@export
 }

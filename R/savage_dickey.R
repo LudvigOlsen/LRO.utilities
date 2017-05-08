@@ -5,7 +5,7 @@
 #' @title Calculate Bayes Factor using Savage-Dickey density ratio.
 #' @description Creates plot of prior and posterior distributions and calculates the
 #'  Bayes factor at the point of interest (Q).
-#' @details Bayes factors are calculated using the \link[polspline]{polspline} package.
+#' @details Bayes factors are calculated using the polspline package.
 #'
 #'  BF10 <- dlogspline(Q, logspline(post)) /
 #'  dlogspline(Q,logspline(prior))
@@ -22,7 +22,7 @@
 #' @return List with ggplot2 object (optional), BF10 and BF01
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
-#' @export
+#' ######@export
 #' @examples
 #' # Sampling from two different gaussian distributions
 #' prior <- rnorm(1000, mean=0, sd=1)
