@@ -23,6 +23,7 @@ Main functions:
 -   binarizer, binarizer\_
 -   rename\_col
 -   savage\_dickey
+-   roll\_previous
 
 Installation
 ------------
@@ -288,13 +289,41 @@ posterior <- rnorm(1000, mean=2, sd=2)
 s_d <- savage_dickey(posterior, prior, Q = 0, plot = TRUE)
 
 s_d$BF10
-#> [1] 0.2691964
+#> [1] 0.274728
 
 s_d$BF01
-#> [1] 3.71476
+#> [1] 3.639963
 
 s_d$post_prior_plot +
   theme_bw()
 ```
 
 ![](README-unnamed-chunk-9-1.png)
+
+#### roll\_previous
+
+Wrapper for zoo::rollapply for applying a function to rolling windows and getting the result of the previous window. Appends NAs at start only.
+
+``` r
+# Create dataframe
+df <- data.frame('round' = c(1,2,3,4,5,6,7,8,9,10),
+                 'score' = c(5,3,4,7,6,5,2,7,8,6))
+
+# For each row we find the mean score of the previous 2 rounds
+df$mean_prev_score = roll_previous(df$score, width = 2, FUN = mean)
+
+df %>% kable()
+```
+
+|  round|  score|  mean\_prev\_score|
+|------:|------:|------------------:|
+|      1|      5|                 NA|
+|      2|      3|                 NA|
+|      3|      4|                4.0|
+|      4|      7|                3.5|
+|      5|      6|                5.5|
+|      6|      5|                6.5|
+|      7|      2|                5.5|
+|      8|      7|                3.5|
+|      9|      8|                4.5|
+|     10|      6|                7.5|
