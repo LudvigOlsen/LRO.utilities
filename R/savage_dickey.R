@@ -19,7 +19,8 @@
 #' @param ylab Label for y-axis
 #' @param plot Create density plot (Logical)
 #' @param print_plot (Logical)
-#' @return List with ggplot2 object (optional), BF10 and BF01
+#' @return List with ggplot2 object (optional), BF10 and BF01, 
+#'  Maximum a posteriori and priori
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
 #' @export
@@ -53,17 +54,19 @@ savage_dickey <- function(post, prior, Q,
     message("'print_plot' has no effect when 'plot' is FALSE")
   }
 
+##  Maximum
+  maximum_a_posteriori = dlogspline(Q, logspline(post))
+  maximum_a_priori = dlogspline(Q, logspline(prior))
 
 ##  .................. #< fc3ac4bea4b5054bdda78ec4479a8730 ># ..................
 ##  Bayes factor                                                            ####
 
-
   BF10 <-
-    dlogspline(Q, logspline(post)) /
-    dlogspline(Q,logspline(prior))
+    maximum_a_posteriori /
+    maximum_a_priori
   BF01 <-
-    dlogspline(Q, logspline(prior)) /
-    dlogspline(Q,logspline(post))
+    maximum_a_priori /
+    maximum_a_posteriori
 
 
 ##  .................. #< 597ccd506c1a6e9cb52cd7fca23de8d8 ># ..................
@@ -91,11 +94,15 @@ savage_dickey <- function(post, prior, Q,
 ##  .................. #< 4310b4db83cb41a819f09cb31930189a ># ..................
 ##  Return list                                                             ####
 
-    return(list("post_prior_plot" = plot_, "BF10" = BF10, "BF01" = BF01))
+    return(list("post_prior_plot" = plot_, "BF10" = BF10, "BF01" = BF01, 
+                "Maximum a posteriori" = maximum_a_posteriori, 
+                "Maximum a priori" = maximum_a_priori))
 
   } else {
 
-    return(list("BF10" = BF10, "BF01" = BF01))
+    return(list("BF10" = BF10, "BF01" = BF01, 
+                "Maximum a posteriori" = maximum_a_posteriori, 
+                "Maximum a priori" = maximum_a_priori))
   }
 
 
