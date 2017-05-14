@@ -10,7 +10,10 @@ test_that("savage_dickey() works correctly", {
   posterior <- rnorm(100, mean=2, sd=2)
 
   expect_equal(savage_dickey(posterior, prior, Q = 0, print_plot = FALSE, plot = FALSE),
-               list("BF10" = 0.151, "BF01" = 6.582), tolerance=1e-2)
+               list("BF10" = 0.151, "BF01" = 6.582,
+                    "Maximum a posteriori" = 0.08096914,
+                    "Maximum a priori" = 0.5329606
+                    ), tolerance=1e-2)
 
   # Doesn't test the ggplot object!
 
