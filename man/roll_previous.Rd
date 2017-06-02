@@ -16,7 +16,7 @@ Must be compatible with \link[zoo]{rollapply}.}
 }
 \description{
 Wrapper for zoo::rollapply for
- applying a function with rolling windows and getting
+ applying a function to rolling windows and getting
  the result of the previous window.
  Appends NAs at start only.
 }
