@@ -61,11 +61,24 @@ polynomializer <- function(data, cols=NULL, degree = 3,
     # Add column to cols
     cols <- c(v_name)
 
+    # Get the input size now,
+    # for testing output size later
+    input_size <- nrow(data)
+
   } else if (is.vector(data) && !is.null(cols)){
 
     stop("data is vector, argument 'cols' must be NULL")
 
   } else if (is.data.frame(data) && !is.null(cols)) {
+
+    # Get the input size now,
+    # for testing output size later
+    input_size <- nrow(data)
+
+    # Convert to tibble
+
+    data <- data %>%
+      tibble::as_tibble()
 
     # Usually we wouldn't want more degrees than elements in data
     if (nrow(data) < degree){
@@ -110,9 +123,19 @@ polynomializer <- function(data, cols=NULL, degree = 3,
     # Rename first column
     colnames(polys)[1] <- col
 
-    return(list(polys))
+    return(polys)
 
   })
+
+  # Cbind dataframes
+  data_polynomialized <- do.call(cbind, data_polynomialized) %>%
+    tibble::as_tibble()
+
+  # Check that we have the same amount of rows
+  # as the input_size
+  stopifnot(nrow(data_polynomialized) == input_size)
+
+
 
 ##  .................. #< 7cc004e6e0fcb6ecb9b70f7615dd5db8 ># ..................
 ##  Merge and sort                                                          ####
@@ -124,8 +147,24 @@ polynomializer <- function(data, cols=NULL, degree = 3,
   # change the order of rows
   data[['polyn_temp_index']] <- c(1:nrow(data))
 
-  # Merge data
-  merged_data <- merge(data, data_polynomialized)
+  # Remove the original columns from data_polynomialized
+  # If vector, it is just the first colum
+  # If dataframe, it is just the names in "cols"
+  if (is.vector(data)) {
+    data_polynomialized <- data_polynomialized[,-1]
+  } else {
+    data_polynomialized <- data_polynomialized %>%
+      dplyr::select(-dplyr::one_of(cols))
+  }
+
+  # cbind data
+  merged_data <- cbind(data, data_polynomialized)
+
+  #print(merged_data)
+
+  # Check that we have the same amount of rows
+  # as the input_size
+  stopifnot(nrow(merged_data) == input_size)
 
   # Get column names of merged data
   merged_col_names <- colnames(merged_data)
