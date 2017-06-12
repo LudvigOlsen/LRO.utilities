@@ -19,8 +19,8 @@
 #' @param ylab Label for y-axis
 #' @param plot Create density plot (Logical)
 #' @param print_plot (Logical)
-#' @return List with ggplot2 object (optional), BF10 and BF01, 
-#'  Maximum a posteriori and priori
+#' @return List with ggplot2 object (optional), BF10 and BF01,
+#'  Maximum a posteriori and priori at point Q
 #' @author Benjamin Hugh Zachariae
 #' @author Ludvig Renbo Olsen
 #' @export
@@ -94,15 +94,15 @@ savage_dickey <- function(post, prior, Q,
 ##  .................. #< 4310b4db83cb41a819f09cb31930189a ># ..................
 ##  Return list                                                             ####
 
-    return(list("post_prior_plot" = plot_, "BF10" = BF10, "BF01" = BF01, 
-                "Maximum a posteriori" = maximum_a_posteriori, 
-                "Maximum a priori" = maximum_a_priori))
+    return(list("post_prior_plot" = plot_, "BF10" = BF10, "BF01" = BF01,
+                "Maximum a posteriori at Q" = maximum_a_posteriori,
+                "Maximum a priori at Q" = maximum_a_priori))
 
   } else {
 
-    return(list("BF10" = BF10, "BF01" = BF01, 
-                "Maximum a posteriori" = maximum_a_posteriori, 
-                "Maximum a priori" = maximum_a_priori))
+    return(list("BF10" = BF10, "BF01" = BF01,
+                "Maximum a posteriori at Q" = maximum_a_posteriori,
+                "Maximum a priori at Q" = maximum_a_priori))
   }
 
 
