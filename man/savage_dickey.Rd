@@ -23,8 +23,8 @@ savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
 \item{print_plot}{(Logical)}
 }
 \value{
-List with ggplot2 object (optional), BF10 and BF01, 
- Maximum a posteriori and priori
+List with ggplot2 object (optional), BF10 and BF01,
+ Maximum a posteriori and priori at point Q
 }
 \description{
 Creates plot of prior and posterior distributions and calculates the
