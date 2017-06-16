@@ -4,7 +4,7 @@
 \alias{maxap}
 \title{Finding maximum a posteriori (MAP) and HPDI from samples.}
 \usage{
-maxap(data, pars = c(), HPDI_prob = 0.89)
+maxap(data, pars = c(), HPDI_prob = 0.89, digits = NULL)
 }
 \arguments{
 \item{data}{Dataframe with samples.
@@ -12,7 +12,9 @@ A column for each parameter}
 
 \item{pars}{Names of parameters (Character).}
 
-\item{HPDI_prob}{Probability for highest posterior density interval}
+\item{HPDI_prob}{Probability for highest posterior density interval (0-1).}
+
+\item{digits}{How many digits to round to (Whole number).}
 }
 \description{
 Given a dataframe with samples for parameters,
