@@ -21,9 +21,9 @@ dls <- function(package="groupdata2") {
                       paste0(round(100-of_mean_all_previous), "% decrease")),
                " from the mean of all previous months.")
 
-  stats_plot <- ggplot(statistics, aes(end, downloads, group=package, color=package)) +
-    geom_line() + geom_label(aes(label=downloads)) +
-    theme_bw()
+  stats_plot <- ggplot2::ggplot(statistics, ggplot2::aes(end, downloads, group=package, color=package)) +
+    ggplot2::geom_line() + ggplot2::geom_label(ggplot2::aes(label=downloads)) +
+    ggplot2::theme_bw()
 
   return(list(knitr::kable(statistics), total_dls, last_month, stats_plot))
 

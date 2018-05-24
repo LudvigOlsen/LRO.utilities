@@ -2,3 +2,8 @@ Name: Insert %>%
 Description: Inserts %>%
 Binding: insertPipe
 Interactive: false
+
+Name: Insert Note Chunk
+Description: Inserts Note Chunk in RMarkdown with include=FALSE
+Binding: insertNoteChunk
+Interactive: false
