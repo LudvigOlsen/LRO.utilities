@@ -3,6 +3,8 @@
 export("%ni%")
 export(binarizer)
 export(binarizer_)
+export(count_all_chars)
+export(insertNoteChunk)
 export(insertPipe)
 export(maxap)
 export(polynomializer)
