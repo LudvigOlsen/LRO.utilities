@@ -5,7 +5,7 @@
 #' See \code{details} for setting up key command.
 #' @author Ludvig Renbo Olsen, \email{r-pkgs@ludvigolsen.dk}
 #' @export
-#' @return Inserts \code{```{note, include=FALSE}\n\"\n\n\"\n```}
+#' @return Inserts \code{```{note, include=FALSE, eval=FALSE}\n\"\n\n\"\n```}
 #' @details How to set up key command in RStudio:
 #'
 #' After installing package.
@@ -23,7 +23,7 @@
 insertNoteChunk <- function() {
 
   # Insert text that splits the code chunk in two
-  rstudioapi::insertText("```{note, include=FALSE}\n\"\n\n\"\n```")
+  rstudioapi::insertText("```{note, include=FALSE, eval=FALSE}\n\"\n\n\"\n```")
 
   # Get document context
   # to get cursor position

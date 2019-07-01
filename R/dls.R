@@ -3,7 +3,13 @@
 
 dls <- function(package="groupdata2") {
 
-  statistics <- dlstats::cran_stats(package)
+  tryCatch({statistics <- dlstats::cran_stats(package)},
+           error = function(e){
+             if ("character string is not in a standard unambiguous format" %in% e){
+               stop(paste0("The package does not seem to exist? Got error:",
+                           "'character string is not in a standard unambiguous format'"))
+             }
+           })
 
   downs <- statistics$downloads
   of_previous_month <- (downs[length(downs)]/downs[length(downs)-1])*100
@@ -17,7 +23,7 @@ dls <- function(package="groupdata2") {
                       paste0(round(100-of_previous_month), "% decrease")),
                " from the previous month, ",
                ifelse(of_mean_all_previous>100,
-                      paste0(round(oof_mean_all_previous-100), "% increase"),
+                      paste0(round(of_mean_all_previous-100), "% increase"),
                       paste0(round(100-of_mean_all_previous), "% decrease")),
                " from the mean of all previous months.")
 
