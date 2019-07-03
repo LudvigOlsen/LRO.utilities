@@ -55,7 +55,7 @@ package_stats_ <- function(stats_df, pgk){
 
 
   data.frame("total_downloads" = sum(downs),
-             "last_month" = downs[length(downs)],
+             "this_month" = downs[length(downs)],
              "from_previous_month" = ifelse(of_previous_month>100,
                                             paste0(round(of_previous_month-100), "% increase"),
                                             paste0(round(100-of_previous_month), "% decrease")),
