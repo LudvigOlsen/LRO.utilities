@@ -7,7 +7,7 @@
 insertNoteChunk()
 }
 \value{
-Inserts \code{```{note, include=FALSE}\n\"\n\n\"\n```}
+Inserts \code{```{note, include=FALSE, eval=FALSE}\n\"\n\n\"\n```}
 }
 \description{
 Addin for RStudio for inserting code chunks named "note" and with include=FALSE in R Markdown.

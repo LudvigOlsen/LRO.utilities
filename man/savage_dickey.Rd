@@ -4,8 +4,15 @@
 \alias{savage_dickey}
 \title{Calculate Bayes Factor using Savage-Dickey density ratio.}
 \usage{
-savage_dickey(post, prior, Q, xlab = "Parameter values", ylab = "Density",
-  plot = TRUE, print_plot = FALSE)
+savage_dickey(
+  post,
+  prior,
+  Q,
+  xlab = "Parameter values",
+  ylab = "Density",
+  plot = TRUE,
+  print_plot = FALSE
+)
 }
 \arguments{
 \item{post}{Samples from posterior distribution (Numeric)}

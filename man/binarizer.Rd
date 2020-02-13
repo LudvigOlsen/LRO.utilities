@@ -3,7 +3,6 @@
 \name{binarizer}
 \alias{binarizer}
 \alias{binarizer_}
-\alias{binarizer_}
 \title{Binarize multiple columns at once}
 \usage{
 binarizer(data, ..., thresh = 0)

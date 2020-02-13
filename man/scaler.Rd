@@ -11,7 +11,6 @@
 \alias{scaler_fit}
 \alias{scaler_fit_}
 \alias{scaler_transform}
-\alias{scaler_invert}
 \title{Scale multiple columns at once}
 \usage{
 scaler(data, ..., center = TRUE, scale = TRUE)

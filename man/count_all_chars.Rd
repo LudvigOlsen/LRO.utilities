@@ -6,3 +6,6 @@
 \usage{
 count_all_chars(strings, char_vocab = NULL)
 }
+\description{
+Counts frequencies of each character
+}

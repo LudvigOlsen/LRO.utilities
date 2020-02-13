@@ -4,8 +4,7 @@
 \alias{polynomializer}
 \title{Create exponentiated vectors.}
 \usage{
-polynomializer(data, cols = NULL, degree = 3, suffix = "_",
-  up_to = TRUE)
+polynomializer(data, cols = NULL, degree = 3, suffix = "_", up_to = TRUE)
 }
 \arguments{
 \item{data}{Dataframe or Vector.}
