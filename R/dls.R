@@ -2,10 +2,10 @@
 # Wrapper for adjustedcranlogs::adj_cran_downloads # previously dlstats::cran_stats
 
 dls <- function(packages = c("groupdata2", "cvms", "xpectr"), from = "2016-01-01",
-                to = lubridate::today(), n_comparison = 100, times = 1, # TODO times not used yet
+                to = lubridate::today(), number_to_compare = 100, times = 1, # TODO times not used yet
                 apply_kable = TRUE) {
 
-  statistics <- download_stats(packages = packages, from = from, to = to, n_comparison = n_comparison)
+  statistics <- download_stats(packages = packages, from = from, to = to, number_to_compare = number_to_compare)
 
   # Download multiple times to find more stable mindownloads
   # statistics <- plyr::ldply(seq_len(times), function(i){
@@ -115,7 +115,7 @@ package_stats_ <- function(stats_df, pgk){
              )
 }
 
-download_stats <- function(packages, from, to, n_comparison){
+download_stats <- function(packages, from, to, number_to_compare){
 
   # Download stats
   statistics <- tryCatch({
@@ -123,7 +123,7 @@ download_stats <- function(packages, from, to, n_comparison){
       packages = packages,
       from = from,
       to = to,
-      numbercomparison = n_comparison
+      number_to_compare = number_to_compare
     )
   },
   error = function(e) {
