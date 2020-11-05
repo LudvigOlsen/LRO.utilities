@@ -1,7 +1,7 @@
 # Package stats
 # Wrapper for adjustedcranlogs::adj_cran_downloads # previously dlstats::cran_stats
 
-dls <- function(packages = c("groupdata2", "cvms", "xpectr"), from = "2016-01-01",
+dls <- function(packages = c("groupdata2", "cvms", "xpectr", "rearrr"), from = "2016-01-01",
                 to = lubridate::today(), number_to_compare = 100, times = 1, # TODO times not used yet
                 apply_kable = TRUE) {
 
